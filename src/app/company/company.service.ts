@@ -28,12 +28,12 @@ export class CompanyService {
   }
 
   public send(params: any): void {
-    this.socket.emit('message', params);
+    this.socket.emit('parametros', params);
   }
 
   public onMessage(): Observable<Tracker> {
     return new Observable<Tracker>(observer => {
-        this.socket.on('message', (data: Tracker) => observer.next(data));
+        this.socket.on('mensagem', (data: Tracker) => observer.next(data));
     });
   }
 
