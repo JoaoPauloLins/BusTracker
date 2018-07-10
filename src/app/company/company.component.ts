@@ -9,19 +9,22 @@ import { CompanyService } from './company.service';
 })
 export class CompanyComponent implements OnInit {
 
-  public companies: Company[] = [];
-  // public companies: Company[] = [
-  //   {name: 'E1'}
-  // ];
+  // public companies: Company[] = [];
+  public companies: Company[] = [
+    {name: 'E1'},
+    {name: 'E2'},
+    {name: 'E3'},
+    {name: 'E9'}
+  ];
 
   constructor(private companyService: CompanyService) { }
 
   ngOnInit() {
 
-    this.companyService.companies().subscribe(
-      data => { this.companies = data},
-      err => console.error(err),
-      () => console.log('done loading companies')
-    );
+    // this.companyService.companies().subscribe(
+    //   data => { this.companies = data},
+    //   err => console.error(err),
+    //   () => console.log('done loading companies')
+    // );
   }
 }
