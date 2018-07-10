@@ -7,7 +7,7 @@ import * as socketIo from 'socket.io-client';
 import { Tracker } from '../models/tracker.model';
 import { Event } from '../models/event';
 
-const SERVER_URL = 'http://localhost:8080';
+const SERVER_URL = 'http://localhost:8081';
 
 @Injectable()
 export class CompanyService {
@@ -16,11 +16,18 @@ export class CompanyService {
   constructor(private httpClient: HttpClient) { }
 
   companies(): Observable<any> {
-    return this.httpClient.get('http://localhost:8080/kompany');
+    return this.httpClient.get('http://localhost:8080/getAllCompanies');
   }
 
-  buses(companyName?: string): Observable<any> {
+  buses(companyName: string): Observable<any> {
     return this.httpClient.get(`http://localhost:8080/companies/${companyName}/bus`);
+  }
+
+  tracker(params: string): void {
+    const companyName = params.split(':', 2)[0];
+    const busRegistration = params.split(':', 2)[1];
+    this.httpClient.get(`http://localhost:8080/sendParams/${companyName}/${busRegistration}`);
+    this.httpClient.get(`http://localhost:8080/bancoEsper`);
   }
 
   public initSocket(): void {

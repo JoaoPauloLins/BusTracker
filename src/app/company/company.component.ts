@@ -21,10 +21,16 @@ export class CompanyComponent implements OnInit {
 
   ngOnInit() {
 
-    // this.companyService.companies().subscribe(
-    //   data => { this.companies = data},
-    //   err => console.error(err),
-    //   () => console.log('done loading companies')
-    // );
+    const company: Company = new Company('');
+
+    this.companyService.companies().subscribe(
+      data => { data.forEach(name => {
+        company.name = name;
+        this.companies.push(company);
+      });
+    },
+      err => console.error(err),
+      () => console.log('done loading companies')
+    );
   }
 }

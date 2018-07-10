@@ -26,12 +26,9 @@ export class TrackerComponent implements OnInit {
   ngOnInit() {
     this.companyName = this.route.snapshot['_routerState'].url.split('/', 3)[2]
     this.busRegistration = this.route.snapshot.paramMap.get('registration');
-
+    const params = this.companyName + ':' + this.busRegistration;
+    this.companyService.tracker(params);
     this.initIoConnection();
-    this.companyService.send({
-      companyName: this.companyName,
-      busRegistration: +this.busRegistration
-    });
   }
 
   private initIoConnection(): void {
