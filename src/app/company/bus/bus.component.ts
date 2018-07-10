@@ -10,25 +10,23 @@ import { CompanyService } from '../company.service';
 })
 export class BusComponent implements OnInit {
 
-  private companyService: CompanyService;
-
   public companyName: string;
 
-  // public buses: Bus[] = [];
-  public buses: Bus[] = [
-    {registration: 1111}
-  ];
+  public buses: Bus[] = [];
+  // public buses: Bus[] = [
+  //   {registration: 1111}
+  // ];
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private companyService: CompanyService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.companyName = this.route.snapshot.paramMap.get('name');
+    console.log(this.companyName);
 
-    // Ir no serviço para pergar os buses a partir do companyName
-    // this.companyService.buses(
-    //   buses => {
-    //     this.buses = buses;
-    //   }
-    // );
+    this.companyService.buses(this.companyName).subscribe(
+      data => { this.buses = data},
+      err => console.error(err),
+      () => console.log('done loading buses')
+    );
   }
 }
