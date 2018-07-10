@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Tracker } from '../../../models/tracker.model';
 import { CompanyService } from '../../company.service';
 import { Event } from '../../../models/event';
@@ -24,10 +24,8 @@ export class TrackerComponent implements OnInit {
   constructor(private companyService: CompanyService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.companyName = this.route.snapshot.paramMap.get('name');
+    this.companyName = this.route.snapshot['_routerState'].url.split('/', 3)[2]
     this.busRegistration = this.route.snapshot.paramMap.get('registration');
-    console.log(this.companyName)
-    console.log(this.busRegistration)
 
     this.initIoConnection();
     this.companyService.send({
