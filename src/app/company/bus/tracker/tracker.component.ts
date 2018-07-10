@@ -13,7 +13,9 @@ export class TrackerComponent implements OnInit {
 
   ioConnection: any;
 
-  public tracker: Tracker;
+  public latitude: number;
+  public longitude: number;
+  public time: string;
   public companyName: string;
   public busRegistration: string;
   // public tracker: Tracker =
@@ -37,9 +39,10 @@ export class TrackerComponent implements OnInit {
     this.ioConnection = this.companyService.onMessage()
       .subscribe((tracker: any) => {
         console.log(tracker);
-        this.tracker.latitude = tracker.latitude;
-        this.tracker.time = tracker.time;
-        this.tracker.longitude = tracker.longitude;
+        
+        this.latitude = +tracker.latitude;
+        this.time = tracker.time;
+        this.longitude = +tracker.longitude;
       });
 
 
