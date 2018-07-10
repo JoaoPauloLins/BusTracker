@@ -35,8 +35,11 @@ export class TrackerComponent implements OnInit {
     this.companyService.initSocket();
 
     this.ioConnection = this.companyService.onMessage()
-      .subscribe((tracker: Tracker) => {
-        this.tracker = tracker;
+      .subscribe((tracker: any) => {
+        console.log(tracker);
+        this.tracker.latitude = tracker.latitude;
+        this.tracker.time = tracker.time;
+        this.tracker.longitude = tracker.longitude;
       });
 
 

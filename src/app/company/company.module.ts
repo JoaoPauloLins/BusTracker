@@ -7,12 +7,14 @@ import { CompanyComponent } from './company.component';
 import { BusComponent } from './bus/bus.component';
 import { CompanyService } from './company.service';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   imports: [
     CommonModule,
     CompanyRoutingModule,
     HttpClientModule,
+    HttpModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyC35R9sDrHnjaep0DJ7gZjjw66HnXFABLg'
     })

@@ -6,6 +6,7 @@ import { Params } from '@angular/router';
 import * as socketIo from 'socket.io-client';
 import { Tracker } from '../models/tracker.model';
 import { Event } from '../models/event';
+import { HttpModule, Http, Response, Headers, RequestOptions } from '@angular/http';
 
 const SERVER_URL = 'http://localhost:8081';
 
@@ -13,7 +14,9 @@ const SERVER_URL = 'http://localhost:8081';
 export class CompanyService {
   private socket;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private http: Http) {
+
+   }
 
   companies(): Observable<any> {
     return this.httpClient.get('http://localhost:8080/getAllCompanies');
@@ -26,8 +29,24 @@ export class CompanyService {
   tracker(params: string): void {
     const companyName = params.split(':', 2)[0];
     const busRegistration = params.split(':', 2)[1];
-    this.httpClient.get(`http://localhost:8080/sendParams/${companyName}/${busRegistration}`);
-    this.httpClient.get(`http://localhost:8080/bancoEsper`);
+    this.http.get(`http://localhost:8080/sendParams/${companyName}/${busRegistration}`, {
+    }).subscribe(
+        data => {
+            const result = JSON.parse(data.text());   
+        },
+        (err: Response) => {
+            console.log('An error occurred:', err);
+        });
+
+        this.http.get(`http://localhost:8080/bancoEsper`, {
+    }).subscribe(
+        data => {
+            const result = JSON.parse(data.text());   
+        },
+        (err: Response) => {
+            console.log('An error occurred:', err);
+        });
+
   }
 
   public initSocket(): void {
@@ -38,9 +57,9 @@ export class CompanyService {
     this.socket.emit('parametros', params);
   }
 
-  public onMessage(): Observable<Tracker> {
-    return new Observable<Tracker>(observer => {
-        this.socket.on('mensagem', (data: Tracker) => observer.next(data));
+  public onMessage(): Observable<any> {
+    return new Observable<any>(observer => {
+        this.socket.on('mensagem', (data: any) => observer.next(data));
     });
   }
 
